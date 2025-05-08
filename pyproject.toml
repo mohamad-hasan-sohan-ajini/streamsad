@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "streamsad"
+version = "0.1.0"
+description = " A light-weight, streaming speech activity detection (SAD) module, designed for real-time speech-only classification"
+readme = "README.md"
+requires-python = ">=3.7"
+license = {text = "MIT"}
+
+authors = [
+  {name = "Mohammad Hassan Sohan Ajini", email = "mohamad.hasan.sohan.ajini@gmail.com"}
+]
+
+dependencies = [
+  "numpy",
+  "onnxruntime",
+]
+
+[project.urls]
+Homepage = "https://github.com/mohamad-hasan-sohan-ajini/streamsad"
+Repository = "https://github.com/mohamad-hasan-sohan-ajini/streamsad"
+Issues = "https://github.com/mohamad-hasan-sohan-ajini/streamsad/issues"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.exclude-package-data]
+"*" = ["*.pyc", "*.pyo", "*~", ".*", "*.bak"]
+
+[tool.setuptools.dynamic]
+readme = {file = ["README.md"]}
