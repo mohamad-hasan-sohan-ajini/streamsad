@@ -12,21 +12,14 @@ from feature_extractor import FeatureExtractor
 class SAD:
     def __init__(self):
         # audio buffer
-        # self.input_audio_buffer = torch.zeros(1, 0)
         self.input_audio_buffer = np.zeros(0, dtype=np.float32)
-
         self.step = 0
+
         # SAD model utils
         self.feature_extractor = FeatureExtractor()
 
-        # self.model = torch.jit.load(f"best-models/uni_freq_res_{gru_width}.pt")
-        # self.model = torch.jit.load(f"best-models/uni_128_freq_res_512.pt")
-        # self.model.eval()
         self.ort_session = ort.InferenceSession("sad_model.onnx")
         self.state = np.zeros((1, 1, 64), dtype=np.float32)
-        # output, state = ort_session.run(None, {"input": x})
-        # output, state = ort_session.run(None, {"input": x, "input_state": state})
-        # self.state = torch.zeros(1, 1, gru_width // 2)
 
         # post processing algorithm
         self.ring_buffer = deque(maxlen=Config.ring_buffer_len)
@@ -35,39 +28,24 @@ class SAD:
         self.voiced_frames = []
 
     def __call__(self, audio_array):
-        # audio_tensor = self.check_input_type(audio)
-        # print(f"{audio_tensor.shape = }")
         # calculate number valid steps and crop valid part of the buffer
-        # self.input_audio_buffer = torch.cat((self.input_audio_buffer, audio_tensor), dim=1)
         self.input_audio_buffer = np.concatenate((self.input_audio_buffer, audio_array))
-        # valid_steps = (self.input_audio_buffer.size(1) - int(self.step * Config.n_hop)) // Config.n_hop
         valid_steps = (
             self.input_audio_buffer.shape[0] - int(self.step * Config.n_hop)
         ) // Config.n_hop
-        # print(f"{valid_steps = }")
         start_index = int(self.step * Config.n_hop)
         end_index = start_index + int(valid_steps * Config.n_hop)
         tmp_audio_tensor = self.input_audio_buffer[start_index:end_index]
-        # print(f"{tmp_audio_tensor.shape = }")
         # run model
         spect = self.feature_extractor(tmp_audio_tensor)
-        # print(f"{spect.shape = }")
-        # spect = spect[:, :, :-1]
-        # print(f"{spect.shape = }")
         # run model
-        # raw_output, self.state = self.model(spect, self.state)
         raw_output, self.state = self.ort_session.run(
             None, {"input": spect, "input_state": self.state}
         )
-        # print(f"{raw_output = }")
-        # print(f"{raw_output.shape = }")
         sad_probs = raw_output[0, :, 1]
-        # print(f"{sad_probs.shape = }")
         # post processing
         segments = self.apply_ring_buffer_smoothing(sad_probs)
         return segments
-        # update output queue
-        # return audio_tensor, spect, raw_output, sad_probs, segments
 
     def get_time(self, steps):
         return steps * Config.n_hop / Config.fs
@@ -108,6 +86,9 @@ class SAD:
             "start": start_time,
             "end": end_time,
             "duration": end_time - start_time,
-            # "sad_probs": [frame["sad_prob"] for frame in self.voiced_frames],
-            "recursion_depth": 2,
         }
+
+    def get_audio(self, segment):
+        start_index = int(segment["start"] * Config.fs)
+        end_index = int(segment["end"] * Config.fs)
+        return self.input_audio_buffer[start_index:end_index]
