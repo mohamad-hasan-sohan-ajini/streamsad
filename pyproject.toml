@@ -8,8 +8,10 @@ version = "0.1.0"
 description = " A light-weight, streaming speech activity detection (SAD) module, designed for real-time speech-only classification"
 readme = "README.md"
 requires-python = ">=3.7"
-license = {text = "MIT"}
-
+license = "MIT"
+license-files = [
+    "LICENSE",
+]
 authors = [
   {name = "Mohammad Hassan Sohan Ajini", email = "mohamad.hasan.sohan.ajini@gmail.com"}
 ]
@@ -32,9 +34,6 @@ where = ["src"]
 
 [tool.setuptools.exclude-package-data]
 "*" = ["*.pyc", "*.pyo", "*~", ".*", "*.bak"]
-
-[tool.setuptools.dynamic]
-readme = {file = ["README.md"]}
 
 [tool.setuptools.package-data]
 "streamsad.models" = ["*.onnx"]
