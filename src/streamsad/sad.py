@@ -9,8 +9,8 @@ from collections import deque
 import numpy as np
 import onnxruntime as ort
 
-from config import Config
-from feature_extractor import FeatureExtractor
+from .config import Config
+from .feature_extractor import FeatureExtractor
 
 
 class SAD:
