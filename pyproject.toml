@@ -35,3 +35,6 @@ where = ["src"]
 
 [tool.setuptools.dynamic]
 readme = {file = ["README.md"]}
+
+[tool.setuptools.package-data]
+"streamsad.models" = ["*.onnx"]

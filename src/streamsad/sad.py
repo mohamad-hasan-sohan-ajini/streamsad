@@ -5,10 +5,12 @@ using a lightweight ONNX model and a WebRTC-inspired ring buffer postprocessing 
 """
 
 from collections import deque
+from importlib import resources
 
 import numpy as np
 import onnxruntime as ort
 
+from . import models
 from .config import Config
 from .feature_extractor import FeatureExtractor
 
@@ -27,7 +29,8 @@ class SAD:
 
         # SAD model components
         self.feature_extractor = FeatureExtractor()
-        self.ort_session = ort.InferenceSession("sad_model.onnx")
+        with resources.path(models, "model_2025-05-09.onnx") as model_path:
+            self.ort_session = ort.InferenceSession(model_path)
         self.state = np.zeros((1, 1, 64), dtype=np.float32)
 
         # Postprocessing algorithm
