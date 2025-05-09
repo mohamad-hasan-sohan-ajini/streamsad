@@ -1,2 +1,3 @@
 # streamsad
-A light-weight, streaming speech activity detection (SAD) module, designed for real-time speech-only classification
+
+`streamsad` is a streaming-oriented Speech Activity Detection (SAD) module that operates frame by frame, without requiring access to the full audio signal (unlike batch processing). Unlike simple energy-based Voice Activity Detection (VAD), it accurately detects human speech while ignoring music, background noise, and silence. Powered by an efficient ONNX model and a postprocessing algorithm inspired by WebRTC (using ring buffer smoothing), it runs entirely on the CPU with minimal overhead, making it ideal for real-time voice interfaces, ASR frontends, and low-resource deployments.
