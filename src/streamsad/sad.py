@@ -29,8 +29,8 @@ class SAD:
 
         # SAD model components
         self.feature_extractor = FeatureExtractor()
-        with resources.path(models, "model_2025-05-09.onnx") as model_path:
-            self.ort_session = ort.InferenceSession(model_path)
+        model_path = resources.files(models).joinpath("model_2025-05-09.onnx")
+        self.ort_session = ort.InferenceSession(model_path)
         self.state = np.zeros((1, 1, 64), dtype=np.float32)
 
         # Postprocessing algorithm
