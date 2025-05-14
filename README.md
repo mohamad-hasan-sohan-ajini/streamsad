@@ -4,6 +4,8 @@
 
 # Dependencies
 
+This module has been tested and works correctly with Python 3.10 through 3.13.
+
 The following third-party dependencies are required to use `streamsad`:
 
 - `numpy`
