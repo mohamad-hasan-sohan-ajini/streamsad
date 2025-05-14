@@ -14,8 +14,8 @@ The following third-party dependencies are required to use `streamsad`:
 Here is an example of how to use the `streamsad` module:
 
 ```python
-from streamsad.sad import SAD
 import numpy as np
+from streamsad import SAD
 
 # Initialize the SAD model
 sad = SAD()
