@@ -15,7 +15,6 @@ license-files = [
 authors = [
   {name = "Mohammad Hassan Sohan Ajini", email = "mohamad.hasan.sohan.ajini@gmail.com"}
 ]
-
 dependencies = [
   "numpy==1.26.3",
   "onnxruntime==1.20.1",
