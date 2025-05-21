@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "streamsad"
 version = "0.1.2"
-description = " A light-weight, streaming speech activity detection (SAD) module, designed for real-time speech-only classification"
+description = "A light-weight, streaming speech activity detection (SAD) module, designed for real-time speech-only classification"
 readme = "README.md"
 requires-python = ">=3.10"
 license = "MIT"
