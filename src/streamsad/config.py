@@ -11,6 +11,9 @@ from dataclasses import dataclass
 class Config:
     """Holds global configuration constants for the StreamSAD system."""
 
+    # model name
+    model_name = "model_2025-06-11.onnx"
+
     # feature parameters
     fs = 16000
     n_fft = 512

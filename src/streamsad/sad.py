@@ -29,7 +29,7 @@ class SAD:
 
         # SAD model components
         self.feature_extractor = FeatureExtractor()
-        model_path = resources.files(models).joinpath("model_2025-05-09.onnx")
+        model_path = resources.files(models).joinpath(Config.model_name)
         self.ort_session = ort.InferenceSession(model_path)
         self.state = np.zeros((1, 1, 64), dtype=np.float32)
 
