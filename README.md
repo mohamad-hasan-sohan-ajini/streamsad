@@ -2,14 +2,41 @@
 
 `streamsad` is a streaming-oriented Speech Activity Detection (SAD) module that operates frame by frame, without requiring access to the full audio signal (unlike batch processing). Unlike simple energy-based Voice Activity Detection (VAD), it accurately detects human speech while ignoring music, background noise, and silence. Powered by an efficient ONNX model and a post-processing algorithm inspired by WebRTC (using ring buffer smoothing), it runs entirely on the CPU with minimal overhead, making it ideal for real-time voice interfaces, ASR frontends, and low-resource deployments.
 
-# Dependencies
+# Requirements
 
-This module has been tested and works correctly with Python 3.10 through 3.13.
+`streamsad` supports Python 3.12 through 3.14. Its runtime dependencies are
+installed automatically:
 
-The following third-party dependencies are required to use `streamsad`:
+- `numpy==2.5.3`
+- `onnxruntime==1.30.0`
 
-- `numpy`
-- `onnxruntime`
+# Installation
+
+## Install from PyPI
+
+Create and activate a virtual environment, then install `streamsad`:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install streamsad
+```
+
+On Windows PowerShell, activate the environment with
+`.venv\Scripts\Activate.ps1` instead.
+
+## Install from source
+
+From the root of a cloned repository, create a virtual environment and install
+the package in editable mode:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install -e .
+```
 
 # How to Use
 
@@ -32,18 +59,11 @@ segments = sad(audio_np_array)
 print(segments)
 ```
 
-# Installation
-
-You can install `streamsad` using pip:
-
-```bash
-pip install streamsad
-```
-
 # Testing
 
-After installing the module, you can run unit tests using `pytest`:
+Install the package with its test dependencies, then run the test suite:
 
 ```bash
-pytest -s tests/test_sad.py
+python -m pip install -e '.[test]'
+python -m pytest
 ```
